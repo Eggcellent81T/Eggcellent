@@ -1,0 +1,63 @@
+#include <DHT.h>
+#include <DHT_U.h>
+///////////Libreria de LCD y pines//////////
+#include <LiquidCrystal.h>
+const int rs = 8, en = 9, d4 = 4, d5 = 5, d6 = 6, d7 = 7;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+///////////Variables/////////////
+float a;
+float T;
+float hum;
+float humedad;
+int D;
+void setup() {
+lcd.begin(16, 2);
+pinMode(2, OUTPUT);
+pinMode(7, OUTPUT);
+pinMode(8, OUTPUT);
+Serial.begin(9600);
+}
+void loop() {
+a = analogRead(A5);
+T = ((a * 200 / 1023));
+////////Se ubica el sursor en el origen//
+lcd.setCursor(0, 0);
+lcd.write("TEMP.ACT.=");
+lcd.setCursor(10, 0);
+lcd.print(T);
+lcd.setCursor(14, 0);
+lcd.print((char)223);
+lcd.setCursor(15, 0);
+lcd.print ("C");
+/////////Serial//////////
+Serial.print("Temperatura = ");
+Serial.print(T);
+Serial.print("°C");
+Serial.print("\t");
+//////////////////////
+hum = analogRead(A0);
+humedad = (hum * 100 / 1023);
+////////////Se Ubica el cursor en la segunda fila///////////
+lcd.setCursor(0, 1);
+lcd.write("HUMEDAD=");
+lcd.setCursor(10, 1);
+lcd.print(humedad);
+lcd.setCursor(14, 1);
+lcd.print((char)223);
+lcd.setCursor(15, 1);
+lcd.print ("%");
+///////////Serial/////////////
+Serial.print("HUMEDAD = ");
+Serial.print(humedad);
+Serial.print("%");
+Serial.print("\t");
+Serial.print(hum);
+Serial.print("\t");
+/////////////////////////////
+D = T - humedad;
+Serial.print("T - hum = ");
+Serial.print(D);
+Serial.println("\n");
+//delay(200);
+
+}
