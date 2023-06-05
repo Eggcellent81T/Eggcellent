@@ -1,0 +1,14 @@
+<?php
+$mysqli = new mysqli("127.0.0.1", "root", "", "eggcellent");
+switch ($_GET['alertas']) {
+case 'alertas':
+$mysqli->query("INSERT INTO alertas
+(Id_alerta,Mensaje,Fecha,Id_huevo) VALUES
+(NULL,'$_GET[Mensaje]','$_GET[Fecha]','$_GET[Id_huevo]')");
+echo 'Registro insertado en alertas correctamente';
+break;
+default:
+echo 'Tabla no encontrada';
+break;
+}
+?>
